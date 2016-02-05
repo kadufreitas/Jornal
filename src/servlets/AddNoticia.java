@@ -20,13 +20,13 @@ import modelo.Usuario;
  * Servlet implementation class addNoticia
  */
 @WebServlet("/addNoticia")
-public class addNoticia extends HttpServlet {
+public class AddNoticia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private NoticiaDAO noticiaDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addNoticia() {
+    public AddNoticia() {
         super();
         Connection conexao = new FabricaConexao().getConnection();
         this.noticiaDAO = new NoticiaDAO(conexao);

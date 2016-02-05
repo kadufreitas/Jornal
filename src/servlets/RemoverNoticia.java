@@ -19,13 +19,13 @@ import DAO.NoticiaDAO;
  * Servlet implementation class removerNoticia
  */
 @WebServlet("/removerNoticia")
-public class removerNoticia extends HttpServlet {
+public class RemoverNoticia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private NoticiaDAO noticiaDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public removerNoticia() {
+    public RemoverNoticia() {
         super();
         Connection conexao = new FabricaConexao().getConnection();
         this.noticiaDAO = new NoticiaDAO(conexao);

@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class cadastrarEditor
  */
 @WebServlet("/cadastrarEditor")
-public class cadastrarEditor extends HttpServlet {
+public class CadastrarEditor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public cadastrarEditor() {
+    public CadastrarEditor() {
         super();
         // TODO Auto-generated constructor stub
     }
