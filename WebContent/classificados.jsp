@@ -8,6 +8,7 @@
 <title>Classificados</title>
 </head>
 <body>
+	<h1>Classificados</h1>
 	<c:choose>
 		<c:when test="${not empty classificados}">
 			<c:forEach var="classificado" items="${classificados}">
@@ -16,7 +17,7 @@
 						${classificado.conteudo}
 					</p>
 					<div>
-						<h4>Ofertas</h4>
+						<p>Ofertas</p>
 						<c:choose>
 							<c:when test="${not empty classificado.ofertas}">
 								<c:forEach var="oferta" items="${classificado.ofertas}">
@@ -44,7 +45,7 @@
 		</c:otherwise>
 	</c:choose>
 	<c:if test="${not empty usuario && (usuario.tipo == 2 || usuario.tipo == 1)}">
-		<a href="addNoticia?idCategoria=${idCategoria}">Adicionar Noticia</a>
+		<a href="cadastroClassificado.jsp">Adicionar Classificado</a>
 	</c:if>
 </body>
 </html>

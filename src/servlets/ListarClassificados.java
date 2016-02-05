@@ -43,6 +43,7 @@ public class ListarClassificados extends HttpServlet {
 			List<Classificado> classificados = this.classificadoDAO.pegarTodos();
 			request.setAttribute("classificados", classificados);
 		}catch (FalhaNoBanco e) {
+			e.printStackTrace();
 			request.setAttribute("erro_listar_classificados", "Erro no banco!");
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("classificados.jsp");

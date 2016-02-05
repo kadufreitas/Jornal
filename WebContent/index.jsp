@@ -10,8 +10,13 @@
 <body>
 	<a href="listarCategorias">Categorias de Notícias</a>
 	<a href="listarClassificados">Classificados</a>
-	<c:if test="${not empty usuario && (usuario.tipo == 2 || usuario.tipo == 1)}">
-		<a href="addNoticia?idCategoria=${categoria.id}">Adicionar Notícia</a>
+	<c:if test="${not empty usuario && (usuario.tipo == 1)}">
+		<a href="cadastroJornalista.jsp">Cadastrar Jornalista</a>
+		<a href="cadastroEditor.jsp">Cadastrar Editor</a>
+	</c:if>
+	<c:if test="${empty usuario}">
+		<a href="cadastro.jsp">Cadastrar-se</a>
+		<a href="login.jsp">Login</a>
 	</c:if>
 </body>
 </html>

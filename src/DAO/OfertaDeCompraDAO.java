@@ -39,7 +39,7 @@ public class OfertaDeCompraDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;	
 		try {
-			stmt =	conexao.prepareStatement("Select * from Oferta_Compra where id_classificado = ?");
+			stmt =	conexao.prepareStatement("Select * from oferta_compra where id_classificado = ?");
 			stmt.setLong(1, idClassificado);
 			rs = stmt.executeQuery();
 			while(rs.next()){

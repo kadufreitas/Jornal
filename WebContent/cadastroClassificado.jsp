@@ -20,7 +20,7 @@ form{
 </style>
 </head>
 <body>
-	<form method="post" action="addCategoria">
+	<form method="post" action="addClassificados">
 		<label for="text">Conteudo:</label>
 		<input type="text" name="conteudo"/>
 		<c:forEach var="erro" items="${cadastro_erro}">

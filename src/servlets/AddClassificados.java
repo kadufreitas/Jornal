@@ -55,7 +55,7 @@ public class AddClassificados extends HttpServlet {
 				Classificado classificado = new Classificado();
 				classificado.setConteudo(conteudo);
 				this.classificadoDAO.cadastrar(classificado);
-				response.sendRedirect("/listarClassificados");
+				response.sendRedirect("listarClassificados");
 				return;
 			} catch (FalhaNoBanco e) {
 				request.setAttribute("cadastro_erro", "Ocorreu alguma falha no banco!");
