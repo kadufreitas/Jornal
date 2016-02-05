@@ -33,16 +33,10 @@ public class Login extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("senha");
@@ -56,6 +50,7 @@ public class Login extends HttpServlet {
 					
 					session.setAttribute("usuario", usuario);
 					response.sendRedirect("index.jsp");
+					return;
 				}else{
 					request.setAttribute("erro_login", "Email ou Senha inválidos!");
 				}

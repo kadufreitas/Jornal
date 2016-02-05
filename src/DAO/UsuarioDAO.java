@@ -14,8 +14,8 @@ public class UsuarioDAO {
 	public void cadastrar(Usuario usuario) throws FalhaNoBanco{
 		
 		 String sql = "insert into usuario " +
-				  "(nome,email,senha)" +
-				  " values (?,?,?)";
+				  "(nome,email,senha, tipo)" +
+				  " values (?,?,?, ?)";
 				 
 				  try {
 				  PreparedStatement stmt = connection.prepareStatement(sql);
@@ -24,11 +24,12 @@ public class UsuarioDAO {
 				  stmt.setString(1,usuario.getNome());
 				  stmt.setString(2,usuario.getEmail());
 				  stmt.setString(3,usuario.getSenha());
-				  
+				  stmt.setInt(4, usuario.getTipo());
 				  // executa
 				  stmt.execute();
 				  stmt.close();
 				  } catch (SQLException e) {
+					  e.printStackTrace();
 					  throw new FalhaNoBanco();
 				  }
 	}
@@ -37,7 +38,7 @@ public class UsuarioDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;	
 		try {
-			stmt = connection.prepareStatement("Select * from admin where id=?");
+			stmt = connection.prepareStatement("Select * from usuario where id=?");
 			stmt.setLong(1, idUsuario);
 			rs = stmt.executeQuery();
 			Usuario usuario = new Usuario();
@@ -70,7 +71,7 @@ public class UsuarioDAO {
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setTipo(rs.getInt("tipo"));
-				
+				usuario.setSenha(rs.getString("senha"));
 				return usuario;
 			}
 			

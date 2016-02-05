@@ -56,14 +56,15 @@ public class CadastrarEditor extends HttpServlet {
 				usuario.setSenha(password);
 				usuario.setTipo(1);
 				this.usuarioDAO.cadastrar(usuario);
-				response.sendRedirect("cadastrarEditor.jsp");
+				response.sendRedirect("cadastroEditor.jsp");
+				return;
 			} catch (FalhaNoBanco e) {
 				request.setAttribute("add_editor_erro", "Ocorreu alguma falha no banco!");
 			}	
 		}else{
 			request.setAttribute("add_editor_erro", "Campos inválidos!");
 		}
-		RequestDispatcher rq = request.getRequestDispatcher("cadastrarEditor.jsp");
+		RequestDispatcher rq = request.getRequestDispatcher("cadastroEditor.jsp");
 		rq.forward(request, response);
 	}
 

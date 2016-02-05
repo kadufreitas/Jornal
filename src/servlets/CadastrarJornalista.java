@@ -57,7 +57,8 @@ public class CadastrarJornalista extends HttpServlet {
 				usuario.setSenha(password);
 				usuario.setTipo(2);
 				this.usuarioDAO.cadastrar(usuario);
-				response.sendRedirect("cadastrarJornalista.jsp");
+				response.sendRedirect("cadastroJornalista.jsp");
+				return;
 			} catch (FalhaNoBanco e) {
 				request.setAttribute("add_jornalista_erro", "Ocorreu alguma falha no banco!");
 			}	
@@ -65,7 +66,7 @@ public class CadastrarJornalista extends HttpServlet {
 			request.setAttribute("add_jornalista_erro", "Campos inválidos!");
 		}
 		
-		RequestDispatcher rq = request.getRequestDispatcher("cadastrarJornalista.jsp");
+		RequestDispatcher rq = request.getRequestDispatcher("cadastroJornalista.jsp");
 		rq.forward(request, response);
 	}
 
