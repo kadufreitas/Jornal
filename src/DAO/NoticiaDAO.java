@@ -22,9 +22,10 @@ public class NoticiaDAO {
 	
 	public void cadastrar(Noticia noticia) throws FalhaNoBanco{
 		try {
-			PreparedStatement pstm = conexao.prepareStatement("insert into noticia(conteudo, id_categoria) values (?, ?)");
+			PreparedStatement pstm = conexao.prepareStatement("insert into noticia(conteudo, id_categoria,titulo) values (?, ?, ?)");
 			pstm.setString(1, noticia.getConteudo());
 			pstm.setLong(2, noticia.getCategoria());
+			pstm.setString(3, noticia.getTitulo());
 			pstm.execute();
 			pstm.close();
 		} catch (SQLException e) {

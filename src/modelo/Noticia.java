@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Noticia {
 	private long id;
+	private String titulo;
 	private String conteudo;
 	private long categoria;
 	private List<Comentario> comentarios;
@@ -19,6 +20,15 @@ public class Noticia {
 		this.comentarios = comentarios;
 	}
 	
+	
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 	public List<Comentario> getComentarios() {
 		return comentarios;
 	}
