@@ -2,12 +2,13 @@ package DAO;
 
 import modelo.Usuario;
 import java.sql.*;
+import excecao.FalhaNoBanco;
 
 public class UsuarioDAO {
 	private Connection connection;
 	
-	public UsuarioDAO(){
-		this.connection = new FabricaConexao().getConnection();
+	public UsuarioDAO(Connection conexao){
+		this.connection = conexao;
 	}
 	
 	public void cadastrar(Usuario usuario){
@@ -32,7 +33,7 @@ public class UsuarioDAO {
 				  }
 	}
 		
-	public Usuario pegarPorId(long idUsuario){
+	public Usuario pegarPorId(long idUsuario) throws FalhaNoBanco{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;	
 		try {
@@ -45,14 +46,38 @@ public class UsuarioDAO {
 				usuario.setEmail(rs.getString("email"));
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
+				usuario.setTipo(rs.getInt("tipo"));
 				return usuario;
 			}
 			
 			return null;
 		} catch (SQLException e) {
-			//throw new ErroNoDao();
+			throw new FalhaNoBanco();
+		}
+	}
+	
+	public Usuario ObterPorEmail(String email) throws FalhaNoBanco{
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+			stmt = connection.prepareStatement("Select * from usuario where email=?");
+			stmt.setString(1, email);
+			rs = stmt.executeQuery();
+			Usuario usuario = new Usuario();
+			
+			if(rs.first()){
+				usuario.setEmail(rs.getString("email"));
+				usuario.setId(rs.getInt("id"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setTipo(rs.getInt("tipo"));
+				
+				return usuario;
+			}
+			
+			return null;
+		} catch (SQLException e) {
+			throw new FalhaNoBanco();
 		} 
-		return null;
 	}
 	
 }
