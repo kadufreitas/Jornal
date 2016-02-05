@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import excecao.FalhaNoBanco;
 import modelo.Usuario;
 import DAO.FabricaConexao;
 import DAO.UsuarioDAO;
@@ -43,20 +44,25 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String password = request.getParameter("senha");
 		HttpSession session = request.getSession();
 		
 		if(email != null && password != null){
-			Usuario usuario = this.usuarioDAO.pegarPorEmail(email);
-			
-			if(usuario != null && usuario.getSenha().equals(password)){
-				
-				session.setAttribute("usuario", usuario);
-				response.sendRedirect("index.jsp");
-			}else{
-				session.setAttribute("erro_login", "Email ou Senha inválidos!");
+			Usuario usuario;
+			try {
+				usuario = this.usuarioDAO.ObterPorEmail(email);
+				if(usuario != null && usuario.getSenha().equals(password)){
+					
+					session.setAttribute("usuario", usuario);
+					response.sendRedirect("index.jsp");
+				}else{
+					session.setAttribute("erro_login", "Email ou Senha inválidos!");
+					response.sendRedirect("login.jsp");
+				}
+			} catch (FalhaNoBanco e) {
+				session.setAttribute("erro_login", "Ocorreu alguma falha no banco!");
 				response.sendRedirect("login.jsp");
-			}
+			}	
 		}else{
 			session.setAttribute("erro_login", "Email ou Senha inválidos!");
 			response.sendRedirect("login.jsp");
