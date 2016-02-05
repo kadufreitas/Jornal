@@ -18,7 +18,7 @@ public class OfertaDeCompraDAO {
 	
 	public OfertaDeCompraDAO(Connection conexao){
 		this.conexao = conexao;
-		this.usuarioDAO = new UsuarioDAO();
+		this.usuarioDAO = new UsuarioDAO(conexao);
 	}
 	
 	public void cadastrar(OfertaDeCompra ofertaDeCompra) throws FalhaNoBanco{
