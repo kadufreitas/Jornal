@@ -16,10 +16,10 @@ public class OfertaDeCompra {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Usuario getIdUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
-	public void setIdUsuario(Usuario usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 	public long getIdClassificado() {
