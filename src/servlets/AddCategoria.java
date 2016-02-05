@@ -53,7 +53,7 @@ public class AddCategoria extends HttpServlet {
 				Categoria categoria = new Categoria();
 				categoria.setNome(nome);
 				this.categoriaDAO.cadastrar(categoria);
-				response.sendRedirect("/listarCategorias");
+				response.sendRedirect("listarCategorias");
 				return;
 			} catch (FalhaNoBanco e) {
 				request.setAttribute("cadastro_erro", "Ocorreu alguma falha no banco!");

@@ -43,6 +43,7 @@ public class ListarNoticias extends HttpServlet {
 			long categoria = Long.parseLong(idCategoria);
 		
 			List<Noticia> noticias = this.noticiaDAO.pegarTodas(categoria);
+			request.setAttribute("idCategoria", categoria);
 			request.setAttribute("noticias", noticias);
  		}catch(RuntimeException e){
 			request.setAttribute("erro_listar_noticias", "Id Inválido!");

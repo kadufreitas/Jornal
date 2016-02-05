@@ -9,11 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import DAO.ComentarioDAO;
 import DAO.FabricaConexao;
 import DAO.UsuarioDAO;
-
 import modelo.Comentario;
 import modelo.Noticia;
 import modelo.Usuario;
@@ -25,7 +25,6 @@ import excecao.FalhaNoBanco;
 @WebServlet("/addComentario")
 public class AddComentario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UsuarioDAO usuarioDAO;
 	private ComentarioDAO comentarioDAO;
 
 	/**
@@ -34,7 +33,6 @@ public class AddComentario extends HttpServlet {
 	public AddComentario() {
 		super();
 		Connection conexao = new FabricaConexao().getConnection();
-		usuarioDAO = new UsuarioDAO(conexao);
 		comentarioDAO = new ComentarioDAO(conexao);
 		// TODO Auto-generated constructor stub
 	}
@@ -54,37 +52,31 @@ public class AddComentario extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String categoria = request.getParameter("idCategoria");
 		try {
 			String noticia = request.getParameter("idNoticia");
 			long idNoticia = Long.parseLong(noticia);
 			String conteudo = request.getParameter("conteudo");
-			String usuario = request.getParameter("idUsuario");
-			long idUsuario = Long.parseLong(usuario);
-			String categoria = request.getParameter("idCategoria");
 			long idCategoria = Long.parseLong(categoria);
+			
+			HttpSession session = request.getSession();
+			Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-			if (conteudo != null && usuario != null && noticia != null) {
-				Comentario comentario = new Comentario();
-				comentario.setIdNoticia(idNoticia);
-				comentario.setConteudo(conteudo);
-				Usuario usuarioAux = usuarioDAO.pegarPorId(idUsuario);
-				comentario.setUsuario(usuarioAux);
-				this.comentarioDAO.cadastrar(comentario);
-				response.sendRedirect("listarNoticias?idCategoria="
-						+ idCategoria);
-				return;
-			} else {
-				request.setAttribute("erro_add_categoria",
-						"Informações Inválidas!");
-			}
+			Comentario comentario = new Comentario();
+			comentario.setIdNoticia(idNoticia);
+			comentario.setConteudo(conteudo);
+			comentario.setUsuario(usuario);
+			this.comentarioDAO.cadastrar(comentario);
+			response.sendRedirect("listarNoticias?idCategoria="+idCategoria);
+			return;
 		} catch (RuntimeException e) {
-			request.setAttribute("erro_add_categoria", "Categoria Inválida!");
+			request.setAttribute("erro_add_comentario", "Informações Inválida!");
 		} catch (FalhaNoBanco e) {
-			request.setAttribute("erro_add_categoria",
+			request.setAttribute("erro_add_comentario",
 					"Ocorreu alguma falha no banco!");
 		}
 		RequestDispatcher rq = request
-				.getRequestDispatcher("listarNoticias.jsp");
+				.getRequestDispatcher("listarNoticias?idCategoria="+categoria);
 		rq.forward(request, response);
 	}
 }

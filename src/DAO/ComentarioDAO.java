@@ -1,6 +1,7 @@
 package DAO;
 
 import modelo.Comentario;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,17 @@ public class ComentarioDAO {
 			throw new FalhaNoBanco();
 		}
 		return all;
+	}
+	
+	public void excluirTodos(long idNoticia) throws FalhaNoBanco{
+		try {
+			PreparedStatement pstm = connection.prepareStatement("delete from comentario where id_noticia=?");
+			pstm.setLong(1, idNoticia);
+			pstm.execute();
+			pstm.close();
+		} catch (SQLException e) {
+			throw new FalhaNoBanco();
+		}
 	}
 	
 }

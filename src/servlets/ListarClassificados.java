@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,27 +10,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import modelo.Noticia;
-import excecao.FalhaNoBanco;
+import DAO.ClassificadoDAO;
 import DAO.FabricaConexao;
-import DAO.NoticiaDAO;
+import modelo.Categoria;
+import modelo.Classificado;
+import excecao.FalhaNoBanco;
 
 /**
- * Servlet implementation class removerNoticia
+ * Servlet implementation class ListarClassificados
  */
-@WebServlet("/removerNoticia")
-public class RemoverNoticia extends HttpServlet {
+@WebServlet("/listarClassificados")
+public class ListarClassificados extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private NoticiaDAO noticiaDAO;
+    private ClassificadoDAO classificadoDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RemoverNoticia() {
+    public ListarClassificados() {
         super();
         Connection conexao = new FabricaConexao().getConnection();
-        this.noticiaDAO = new NoticiaDAO(conexao);
+        this.classificadoDAO = new ClassificadoDAO(conexao);
+        
         // TODO Auto-generated constructor stub
     }
 
@@ -38,27 +40,20 @@ public class RemoverNoticia extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
-			String noticia = request.getParameter("idNoticia");
-			long idNoticia = Long.parseLong(noticia);
-			String idCategoria = request.getParameter("idCategoria");
-			
-			this.noticiaDAO.remover(idNoticia);
-			response.sendRedirect("listarNoticias?idCategoria="+idCategoria);
-			return;
-		}catch(RuntimeException e){
-			request.setAttribute("erro_remove_categoria", "Id Inválido!");
-		} catch (FalhaNoBanco e) {
-			request.setAttribute("erro_remove_categoria", "Ocorreu alguma falha no banco!");
+			List<Classificado> classificados = this.classificadoDAO.pegarTodos();
+			request.setAttribute("classificados", classificados);
+		}catch (FalhaNoBanco e) {
+			request.setAttribute("erro_listar_classificados", "Erro no banco!");
 		}
-		RequestDispatcher rq = request.getRequestDispatcher("erros.jsp");
-		rq.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("classificados.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 	}
 
 }

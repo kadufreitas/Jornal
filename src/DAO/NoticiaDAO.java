@@ -35,6 +35,7 @@ public class NoticiaDAO {
 	
 	public void remover(long idNoticia) throws FalhaNoBanco{
 		try {
+			this.comentarioDAO.excluirTodos(idNoticia);
 			PreparedStatement pstm = conexao.prepareStatement("delete from noticia where id=?");
 			pstm.setLong(1, idNoticia);
 			pstm.execute();
@@ -73,7 +74,8 @@ public class NoticiaDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;	
 		try {
-			stmt =	conexao.prepareStatement("Select * from noticia");
+			stmt =	conexao.prepareStatement("Select * from noticia where id_categoria=?");
+			stmt.setLong(1, idCategoria);
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				Noticia noticia = new Noticia();
