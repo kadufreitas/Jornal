@@ -44,6 +44,7 @@ public class Login extends HttpServlet {
 		
 		if(email != null && password != null){
 			Usuario usuario;
+			password = new HASH().get_SHA_512_SecurePassword(password);
 			try {
 				usuario = this.usuarioDAO.ObterPorEmail(email);
 				if(usuario != null && usuario.getSenha().equals(password)){

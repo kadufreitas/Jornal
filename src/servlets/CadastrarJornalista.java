@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import DAO.FabricaConexao;
 import DAO.UsuarioDAO;
 import modelo.Usuario;
@@ -51,6 +52,7 @@ public class CadastrarJornalista extends HttpServlet {
 		
 		if(email != null && password != null && nome != null && nome.trim().length() > 0 && email.trim().length() > 0){
 			try {
+				password = new HASH().get_SHA_512_SecurePassword(password);
 				Usuario usuario = new Usuario();
 				usuario.setEmail(email);
 				usuario.setNome(nome);
