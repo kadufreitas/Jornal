@@ -38,7 +38,23 @@ public class AddNoticia extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		RequestDispatcher rq;
+		try{
+			String categoria = request.getParameter("idCategoria");
+			long idCategoria = Long.parseLong(categoria);
+			
+			if(categoria != null){
+				request.setAttribute("idCategoria", idCategoria);
+				rq = request.getRequestDispatcher("cadastroNoticia.jsp");
+			}else{
+				request.setAttribute("erro_add_noticia", "Categoria Inválida!");
+				rq = request.getRequestDispatcher("categorias.jsp");
+			}
+		}catch(RuntimeException e){
+			request.setAttribute("erro_add_noticia", "Categoria Inválida!");
+			rq = request.getRequestDispatcher("categorias.jsp");
+		}
+		rq.forward(request, response);
 	}
 
 	/**
@@ -47,6 +63,7 @@ public class AddNoticia extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
 			String conteudo = request.getParameter("conteudo");
+			String titulo = request.getParameter("titulo");
 			String categoria = request.getParameter("idCategoria");
 			long intCategoria = Long.parseLong(categoria);
 			
@@ -54,8 +71,10 @@ public class AddNoticia extends HttpServlet {
 				Noticia noticia = new Noticia();
 				noticia.setCategoria(intCategoria);
 				noticia.setConteudo(conteudo);
+				noticia.setTitulo(titulo);
 				this.noticiaDAO.cadastrar(noticia);
-				response.sendRedirect("/listarCategorias");
+				response.sendRedirect("listarNoticias?idCategoria="+intCategoria);
+				return;
 			}else{
 				request.setAttribute("erro_add_noticia", "Informações Inválidas!");
 			}
@@ -64,7 +83,7 @@ public class AddNoticia extends HttpServlet {
 		} catch (FalhaNoBanco e) {
 			request.setAttribute("erro_add_noticia", "Ocorreu alguma falha no banco!");
 		}
-		RequestDispatcher rq = request.getRequestDispatcher("addNoticia.jsp");
+		RequestDispatcher rq = request.getRequestDispatcher("cadastroNoticia.jsp");
 		rq.forward(request, response);
 	}
 

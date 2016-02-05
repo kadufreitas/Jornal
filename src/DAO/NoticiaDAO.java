@@ -57,6 +57,7 @@ public class NoticiaDAO {
 				noticia.setCategoria(rs.getLong("id_categoria"));
 				noticia.setId(rs.getLong("id"));
 				noticia.setConteudo(rs.getString("conteudo"));
+				noticia.setTitulo(rs.getString("titulo"));
 				noticia.setComentarios(this.comentarioDAO.obterTodos(noticia.getId()));
 				return noticia;
 			}
@@ -78,6 +79,8 @@ public class NoticiaDAO {
 				Noticia noticia = new Noticia();
 				noticia.setId(rs.getLong("id"));
 				noticia.setConteudo(rs.getString("conteudo"));
+				noticia.setTitulo(rs.getString("titulo"));
+				noticia.setCategoria(rs.getLong("id_categoria"));
 				noticia.setComentarios(this.comentarioDAO.obterTodos(noticia.getId()));
 				all.add(noticia);
 			}

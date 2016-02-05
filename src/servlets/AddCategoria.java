@@ -53,6 +53,8 @@ public class AddCategoria extends HttpServlet {
 				Categoria categoria = new Categoria();
 				categoria.setNome(nome);
 				this.categoriaDAO.cadastrar(categoria);
+				response.sendRedirect("/listarCategorias");
+				return;
 			} catch (FalhaNoBanco e) {
 				request.setAttribute("cadastro_erro", "Ocorreu alguma falha no banco!");
 			}	
@@ -60,7 +62,7 @@ public class AddCategoria extends HttpServlet {
 			request.setAttribute("cadastro_erro", "Campos inválidos!");
 		}
 		
-		RequestDispatcher rq = request.getRequestDispatcher("cadastro.jsp");
+		RequestDispatcher rq = request.getRequestDispatcher("cadastroCategoria.jsp");
 		rq.forward(request, response);
 	}
 

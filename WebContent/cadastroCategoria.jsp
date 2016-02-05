@@ -19,8 +19,9 @@ form{
 </style>
 </head>
 <body>
-	<form method="post" action="cadastrarCategoria">
-		<label for="">Nome:</label>
+	<form method="post" action="addCategoria">
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome"/>
 		<c:forEach var="erro" items="${cadastro_erro}">
 			<a class="erro">${erro}</a>
 		</c:forEach>
