@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,15 +49,14 @@ public class RemoverNoticia extends HttpServlet {
 			long idNoticia = Long.parseLong(noticia);
 			
 			this.noticiaDAO.remover(idNoticia);
-			response.sendRedirect("noticias.jsp");
+			response.sendRedirect("/listarCategorias");
 		}catch(RuntimeException e){
-			HttpSession session = request.getSession();
-			session.setAttribute("erro_remove_categoria", "Id Inválido!");
+			request.setAttribute("erro_remove_categoria", "Id Inválido!");
 		} catch (FalhaNoBanco e) {
-			HttpSession session = request.getSession();
-			session.setAttribute("erro_remove_categoria", "Ocorreu alguma falha no banco!");
+			request.setAttribute("erro_remove_categoria", "Ocorreu alguma falha no banco!");
 		}
-		response.sendRedirect("addCategoria.jsp");
+		RequestDispatcher rq = request.getRequestDispatcher("login.jsp");
+		rq.forward(request, response);
 	}
 
 }

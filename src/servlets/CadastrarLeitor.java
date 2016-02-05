@@ -3,12 +3,12 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import DAO.FabricaConexao;
 import DAO.UsuarioDAO;
@@ -46,7 +46,6 @@ public class CadastrarLeitor extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("senha");
 		String nome = request.getParameter("nome");
-		HttpSession session = request.getSession();
 		
 		if(email != null && password != null && nome != null && nome.trim().length() > 0 && email.trim().length() > 0){
 			try {
@@ -56,16 +55,15 @@ public class CadastrarLeitor extends HttpServlet {
 				usuario.setSenha(password);
 				usuario.setTipo(3);
 				this.usuarioDAO.cadastrar(usuario);
-				session.setAttribute("usuario", usuario);
-				response.sendRedirect("cadastro.jsp");
 			} catch (FalhaNoBanco e) {
-				session.setAttribute("cadastro_erro", "Ocorreu alguma falha no banco!");
-				response.sendRedirect("cadastro.jsp");
+				request.setAttribute("cadastro_erro", "Ocorreu alguma falha no banco!");
 			}	
 		}else{
-			session.setAttribute("cadastro_erro", "Campos inválidos!");
-			response.sendRedirect("cadastro.jsp");
+			request.setAttribute("cadastro_erro", "Campos inválidos!");
 		}
+		
+		RequestDispatcher rq = request.getRequestDispatcher("cadastro.jsp");
+		rq.forward(request, response);
 	}
 
 }

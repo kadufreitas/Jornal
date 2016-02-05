@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,17 +57,16 @@ public class Login extends HttpServlet {
 					session.setAttribute("usuario", usuario);
 					response.sendRedirect("index.jsp");
 				}else{
-					session.setAttribute("erro_login", "Email ou Senha inválidos!");
-					response.sendRedirect("login.jsp");
+					request.setAttribute("erro_login", "Email ou Senha inválidos!");
 				}
 			} catch (FalhaNoBanco e) {
-				session.setAttribute("erro_login", "Ocorreu alguma falha no banco!");
-				response.sendRedirect("login.jsp");
+				request.setAttribute("erro_login", "Ocorreu alguma falha no banco!");
 			}	
 		}else{
-			session.setAttribute("erro_login", "Email ou Senha inválidos!");
-			response.sendRedirect("login.jsp");
+			request.setAttribute("erro_login", "Email ou Senha inválidos!");
 		}
+		RequestDispatcher rq = request.getRequestDispatcher("login.jsp");
+		rq.forward(request, response);
 	}
 
 }
