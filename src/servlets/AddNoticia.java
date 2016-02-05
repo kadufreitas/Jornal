@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,19 +55,17 @@ public class AddNoticia extends HttpServlet {
 				noticia.setCategoria(intCategoria);
 				noticia.setConteudo(conteudo);
 				this.noticiaDAO.cadastrar(noticia);
-				response.sendRedirect("noticias.jsp");
+				response.sendRedirect("/listarCategorias");
 			}else{
-				HttpSession session = request.getSession();
-				session.setAttribute("erro_add_categoria", "Informações Inválidas!");
+				request.setAttribute("erro_add_noticia", "Informações Inválidas!");
 			}
 		}catch(RuntimeException e){
-			HttpSession session = request.getSession();
-			session.setAttribute("erro_add_categoria", "Categoria Inválida!");
+			request.setAttribute("erro_add_noticia", "Categoria Inválida!");
 		} catch (FalhaNoBanco e) {
-			HttpSession session = request.getSession();
-			session.setAttribute("erro_add_categoria", "Ocorreu alguma falha no banco!");
+			request.setAttribute("erro_add_noticia", "Ocorreu alguma falha no banco!");
 		}
-		response.sendRedirect("addCategoria.jsp");
+		RequestDispatcher rq = request.getRequestDispatcher("addNoticia.jsp");
+		rq.forward(request, response);
 	}
 
 }

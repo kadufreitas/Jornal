@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,16 +33,10 @@ public class Login extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("senha");
@@ -55,18 +50,18 @@ public class Login extends HttpServlet {
 					
 					session.setAttribute("usuario", usuario);
 					response.sendRedirect("index.jsp");
+					return;
 				}else{
-					session.setAttribute("erro_login", "Email ou Senha inválidos!");
-					response.sendRedirect("login.jsp");
+					request.setAttribute("erro_login", "Email ou Senha inválidos!");
 				}
 			} catch (FalhaNoBanco e) {
-				session.setAttribute("erro_login", "Ocorreu alguma falha no banco!");
-				response.sendRedirect("login.jsp");
+				request.setAttribute("erro_login", "Ocorreu alguma falha no banco!");
 			}	
 		}else{
-			session.setAttribute("erro_login", "Email ou Senha inválidos!");
-			response.sendRedirect("login.jsp");
+			request.setAttribute("erro_login", "Email ou Senha inválidos!");
 		}
+		RequestDispatcher rq = request.getRequestDispatcher("login.jsp");
+		rq.forward(request, response);
 	}
 
 }
