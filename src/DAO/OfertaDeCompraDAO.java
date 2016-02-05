@@ -1,7 +1,5 @@
 package DAO;
 
-import java.util.List;
-
 import modelo.OfertaDeCompra;
 
 public class OfertaDeCompraDAO {

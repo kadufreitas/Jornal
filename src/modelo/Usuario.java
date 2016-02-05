@@ -6,6 +6,19 @@ public class Usuario {
 	private String email;
 	private String senha;
 	private int tipo;
+	
+	public Usuario(){
+		
+	}
+	
+	public Usuario(long id, String nome, String email, String senha, int tipo){
+		this.id = id;
+		this.email = email;
+		this.senha = senha;
+		this.tipo = tipo;
+		this.nome = nome;
+	}
+	
 	public long getId() {
 		return id;
 	}

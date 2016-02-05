@@ -2,7 +2,7 @@ package modelo;
 
 public class OfertaDeCompra {
 	private long id;
-	private long idUsuario;
+	private Usuario usuario;
 	private long idClassificado;
 	private String conteudo;
 	
@@ -16,11 +16,11 @@ public class OfertaDeCompra {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getIdUsuario() {
-		return idUsuario;
+	public Usuario getIdUsuario() {
+		return usuario;
 	}
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	public long getIdClassificado() {
 		return idClassificado;

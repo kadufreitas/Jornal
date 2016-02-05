@@ -11,6 +11,12 @@ public class Classificado {
 		
 	}
 	
+	public Classificado(long id, String conteudo, List<OfertaDeCompra> ofertas){
+		this.ofertas = ofertas;
+		this.conteudo = conteudo;
+		this.id = id;
+	}
+	
 	public List<OfertaDeCompra> getOfertas() {
 		return ofertas;
 	}

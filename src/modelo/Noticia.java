@@ -12,6 +12,13 @@ public class Noticia {
 		
 	}
 	
+	public Noticia(long id, String conteudo, long categoria, List<Comentario> comentarios){
+		this.id = id;
+		this.conteudo = conteudo;
+		this.categoria = categoria;
+		this.comentarios = comentarios;
+	}
+	
 	public List<Comentario> getComentarios() {
 		return comentarios;
 	}
