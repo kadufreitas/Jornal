@@ -45,3 +45,5 @@ CREATE TABLE oferta_compra (
  CONSTRAINT fk_usuario FOREIGN KEY ( `id_usuario` ) REFERENCES `usuario` ( `id` ) ,
 conteudo varchar(255)
 );
+
+ALTER TABLE noticia ADD COLUMN titulo VARCHAR(50);
