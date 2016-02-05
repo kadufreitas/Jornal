@@ -11,7 +11,7 @@ public class UsuarioDAO {
 		this.connection = conexao;
 	}
 	
-	public void cadastrar(Usuario usuario){
+	public void cadastrar(Usuario usuario) throws FalhaNoBanco{
 		
 		 String sql = "insert into usuario " +
 				  "(nome,email,senha)" +
@@ -29,7 +29,7 @@ public class UsuarioDAO {
 				  stmt.execute();
 				  stmt.close();
 				  } catch (SQLException e) {
-					  throw new RuntimeException(e);
+					  throw new FalhaNoBanco();
 				  }
 	}
 		
