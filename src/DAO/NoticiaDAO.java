@@ -32,8 +32,15 @@ public class NoticiaDAO {
 		}
 	}
 	
-	public void remover(int idNoticia) throws FalhaNoBanco{
-		
+	public void remover(long idNoticia) throws FalhaNoBanco{
+		try {
+			PreparedStatement pstm = conexao.prepareStatement("delete from noticia where id=?");
+			pstm.setLong(1, idNoticia);
+			pstm.execute();
+			pstm.close();
+		} catch (SQLException e) {
+			throw new FalhaNoBanco();
+		}
 	}
 	
 	public Noticia pegarPorId(long idNoticia) throws FalhaNoBanco{
@@ -49,7 +56,7 @@ public class NoticiaDAO {
 				noticia.setCategoria(rs.getLong("id_categoria"));
 				noticia.setId(rs.getLong("id"));
 				noticia.setConteudo(rs.getString("conteudo"));
-				noticia.setComentarios(this.comentarioDAO.pegarTodos(noticia.getId()));
+				noticia.setComentarios(this.comentarioDAO.obterTodos(noticia.getId()));
 				return noticia;
 			}
 			
@@ -70,7 +77,7 @@ public class NoticiaDAO {
 				Noticia noticia = new Noticia();
 				noticia.setId(rs.getLong("id"));
 				noticia.setConteudo(rs.getString("conteudo"));
-				noticia.setComentarios(this.comentarioDAO.pegarTodos(noticia.getId()));
+				noticia.setComentarios(this.comentarioDAO.obterTodos(noticia.getId()));
 				all.add(noticia);
 			}
 			stmt.close();
